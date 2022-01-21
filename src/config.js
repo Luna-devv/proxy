@@ -8,5 +8,5 @@ module.exports = {
     },
     outTimeout: 30000, // (in ms) for outgoing proxy requests
     inTimeout: 30000, // (in ms) for incoming requests
-    arc: [`waya.one`, `www.waya.one`]
+    arc: [`waya.one`, `www.waya.one`, `tixte.waya.one`]
 }
