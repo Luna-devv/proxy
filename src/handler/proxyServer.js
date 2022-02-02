@@ -13,67 +13,67 @@ module.exports = {
     server: proxy,
     handler: async (req, res, head) => {
 
-        // if (req.headers.waya_proxy_api_request = true) {
-
-        //     res.setHeader('Access-Control-Allow-Origin', '*')
-        //     res.setHeader('Access-Control-Allow-Methods', 'GET, PATCH')
-        //     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, waya_proxy_api_request')
-        //     res.setHeader('Access-Control-Allow-Credentials', true)
-
-        //     switch (req.url) {
-        //         case `/setup`:
-        //             if (req.method === `PATCH`) {
-
-        //                 let body = ''
-        //                 req.on('data', async (chunk) => {
-        //                     body = await JSON.parse(chunk.toString())
-        //                 })
-        //                 req.on('end', () => {
-        //                     console.log(body.name)
-        //                     if (!body?.name || !body?.icon) {
-        //                         res.writeHead(400, { error: `Invalid body` })
-        //                         res.end()
-        //                     }
-        //                     let configFile = require(`../dashboard.json`)
-        //                     configFile.name = body.name.replace(/</, `&lt;`).replace(/>/, `&gt;`);
-        //                     configFile.icon = body.icon;
-        //                     writeFileSync(`${__dirname}/../dashboard.json`, JSON.stringify(configFile));
-        //                     res.writeHead(204)
-        //                 })
-        //                 return
-        //             } else {
-        //                 res.writeHead(502)
-        //                 res.end()
-        //             }
-        //             break
-        //         default:
-        //             /*
-        //             * Error!
-        //             * API Route does not exist
-        //             */
-        //             res.writeHead(502)
-        //             res.end()
-        //             break
-        //     }
-        //     return
-        // }
 
         if (arc) await arc.forEach((domain) => {
-            if (`${req.headers.host}${req.url}` === `${domain}/arc-sw.js`) {
-                res.writeHead(302, {
-                    'Location': "https://arc.io/arc-sw.js"
-                });
-                res.end();
+            if (`${req.headers.host}${req.url}`.startsWith(`${domain}/arc-sw.js`)) {
+                res.writeHead(200, {
+                    'Content-Type': 'application/javascript'
+                })
+                res.end('!function(t){var e={};function n(r){if(e[r])return e[r].exports;var o=e[r]={i:r,l:!1,exports:{}};return t[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}n.m=t,n.c=e,n.d=function(t,e,r){n.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:r})},n.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},n.t=function(t,e){if(1&e&&(t=n(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var o in t)n.d(r,o,function(e){return t[e]}.bind(null,o));return r},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n.p="",n(n.s=93)}({3:function(t,e,n){"use strict";n.d(e,"a",(function(){return r})),n.d(e,"c",(function(){return o})),n.d(e,"g",(function(){return i})),n.d(e,"j",(function(){return a})),n.d(e,"i",(function(){return d})),n.d(e,"b",(function(){return f})),n.d(e,"k",(function(){return u})),n.d(e,"d",(function(){return p})),n.d(e,"e",(function(){return l})),n.d(e,"f",(function(){return m})),n.d(e,"h",(function(){return v}));var r={images:["bmp","jpeg","jpg","ttf","pict","svg","webp","eps","svgz","gif","png","ico","tif","tiff","bpg","avif","jxl"],video:["mp4","3gp","webm","mkv","flv","f4v","f4p","f4bogv","drc","avi","mov","qt","wmv","amv","mpg","mp2","mpeg","mpe","m2v","m4v","3g2","gifv","mpv","av1","ts","tsv","tsa","m2t","m3u8"],audio:["mid","midi","aac","aiff","flac","m4a","m4p","mp3","ogg","oga","mogg","opus","ra","rm","wav","webm","f4a","pat"],interchange:["json","yaml","xml","csv","toml","ini","bson","asn1","ubj"],archives:["jar","iso","tar","tgz","tbz2","tlz","gz","bz2","xz","lz","z","7z","apk","dmg","rar","lzma","txz","zip","zipx"],documents:["pdf","ps","doc","docx","ppt","pptx","xls","otf","xlsx"],other:["srt","swf"]},o=["js","cjs","mjs","css"],c="arc:",i={COMLINK_INIT:"".concat(c,"comlink:init"),NODE_ID:"".concat(c,":nodeId"),CLIENT_TEARDOWN:"".concat(c,"client:teardown"),CLIENT_TAB_ID:"".concat(c,"client:tabId"),CDN_CONFIG:"".concat(c,"cdn:config"),P2P_CLIENT_READY:"".concat(c,"cdn:ready"),STORED_FIDS:"".concat(c,"cdn:storedFids"),SW_HEALTH_CHECK:"".concat(c,"cdn:healthCheck"),WIDGET_CONFIG:"".concat(c,"widget:config"),WIDGET_INIT:"".concat(c,"widget:init"),WIDGET_UI_LOAD:"".concat(c,"widget:load"),BROKER_LOAD:"".concat(c,"broker:load"),RENDER_FILE:"".concat(c,"inlay:renderFile"),FILE_RENDERED:"".concat(c,"inlay:fileRendered")},a="serviceWorker",d="/".concat("shared-worker",".js"),f="/".concat("dedicated-worker",".js"),u="/".concat("arc-sw-core",".js"),s="".concat("arc-sw",".js"),p=("/".concat(s),"/".concat("arc-sw"),"arc-db"),l="key-val-store",m=2**17,v="".concat("https://warden.arc.io","/mailbox/propertySession");"".concat("https://warden.arc.io","/mailbox/transfers")},93:function(t,e,n){"use strict";n.r(e);var r=n(3);if("undefined"!=typeof ServiceWorkerGlobalScope){var o="https://arc.io"+r.k;importScripts(o)}else if("undefined"!=typeof SharedWorkerGlobalScope){var c="https://arc.io"+r.i;importScripts(c)}else if("undefined"!=typeof DedicatedWorkerGlobalScope){var i="https://arc.io"+r.b;importScripts(i)}}});')
                 return
             }
         });
 
-        // proxy:
         // Return status code 404 if host is not a registered target
+        console.log(req.headers.host);
         if (!hosts[req.headers.host]) {
-            res.writeHead(404)
-            return res.end()
-        }
+            res.writeHead(200, {
+                'Content-Type': 'text/html'
+            });
+            return res.end(`
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta httpEquiv='Content-Type' content='text/html; charset=utf-8' />
+                    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+                    <title>${req.headers.host === `161.129.154.146` ? `You found me (#_<-)` : `503 | ${req.headers.host}`}</title>
+                </head>
+                <body style="display: flex; justify-content: center; text-align: center; margin-top: 2rem;">
+                    <div>
+                        ${req.headers.host === `161.129.154.146` ? `
+                        <div style="font-size: 3rem">Proxy server</div>
+                        <div stlye="font-size: 0.5rem">Get started in <text>/root/luna/proxy/src/hosts.js</text> or contact <a href="https://discord.com/users/821472922140803112">Luna</a></div>
+                        ` : `
+                        <div style="font-size: 3rem">503 - Service Unavailable</div>
+                        <div stlye="font-size: 0.5rem">Get started in <text>/root/luna/proxy/src/hosts.js</text> or contact <a href="https://discord.com/users/821472922140803112">Luna</a></div>
+                        `}
+                    </div>
+                </body>
+                <style>
+                    @import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+                    @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+                    html {
+                        font-family: 'Ubuntu', sans-serif;
+                        background-color: #242029;
+                        color: rgb(221, 217, 230);
+                    }
+                    text {
+                        background-color: #131418;
+                        color: #9fa2a7;
+                        padding: 0.1rem 0.2rem 0.1rem 0.2rem;
+                        border-radius: 0.2rem;
+                    }
+                    a {
+                        all: unset;
+                        font-family: 'Open Sans', sans-serif;
+                        color: #b671a7;
+                        cursor: pointer;
+                        transition-duration: 300ms;
+                    }
+                </style>
+                </html>
+                `);
+        };
 
         // Get details about the registered target
         const { type, target } = hosts[req.headers.host]

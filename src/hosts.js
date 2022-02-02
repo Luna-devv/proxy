@@ -1,22 +1,34 @@
 module.exports = {
-    "api.waya.one": {
-        target: 3030,
-        type: "WEB"
-    },
-    "prns-api.waya.one": {
-        target: 3031,
-        type: "WEB"
-    },
     "luna.is-a.dev": {
-        target: 3040,
+        target: 5000,
         type: "WEB"
     },
     "waya.one": {
-        target: 3040,
+        target: 5000,
         type: "WEB"
     },
     "www.waya.one": {
-        target: 3040,
+        target: 5000,
+        type: "WEB"
+    },
+    "api.waya.one": {
+        target: 4000,
+        type: "WEB"
+    },
+    "prns-api.waya.one": {
+        target: 4001,
+        type: "WEB"
+    },
+    "ptb.waya.one": {
+        target: "https://www.waya.one",
+        type: "REDIRECT"
+    },
+    "heartbeat-radio.live": {
+        target: 1081,
+        type: "WEB"
+    },
+    "azura.heartbeat-radio.live": {
+        target: 1081,
         type: "WEB"
     }
 }
