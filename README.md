@@ -10,7 +10,7 @@ __Inline command example for Linux__:<br>
 `git clone https://github.com/flamexdev/proxy.git && cd proxy && pm2 start index.js --name proxy`
 
 ## Modify records
-Go to `config.json`. There you can see an example for https://flamex.dev.
+Go to `config.json`. There you can see an example for https://waya.one.
 
 The key is the used (sub-)domain of the incoming request. 
 There are two different types that you can use: `WEB` and `REDIRECT`:
@@ -22,4 +22,4 @@ Redirects the request to the URL, that got specified with `target`
 
 
 ## Any questions left?
-Feel free to open a issue, send me an [E-Mail](mailto:contact@flamex.dev) or a dm on [Discord](https://discord.com/users/681424352599736327)
+Feel free to open a issue, send me an [E-Mail](mailto:luna@waya.one) or a dm on [Discord](https://discord.com/users/821472922140803112)
