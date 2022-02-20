@@ -3,6 +3,10 @@
  */
 
 module.exports = (err, req, res) => {
-    res.writeHead(500)
-    res.end()
+    try {
+        res.writeHead(500);
+        res.end();
+    } catch (e) {
+        return;
+    };
 }

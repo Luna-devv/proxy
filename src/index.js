@@ -1,4 +1,5 @@
-const http = require('http')
+const express = require('express')
+const app = express()
 const fs = require("fs")
 const { greenBright } = require("chalk")
 const { ports, pattern } = require("./config.js")
@@ -11,7 +12,9 @@ if (!pattern.ports.test(ports.httpServer)) throw new TypeError('The httpServer p
 
 // Register handler & start proxy server
 server.on('error', onError)
-http.createServer(handler).listen(ports.httpServer, () => {
+app.use(handler);
+
+app.listen(ports.httpServer, () => {
   console.log(greenBright(`HTTP is running on port ${ports.httpServer}`))
   console.log(greenBright(`Proxy is running on port ${ports.proxyServer}`))
 })

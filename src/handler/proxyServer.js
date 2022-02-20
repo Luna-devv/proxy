@@ -1,4 +1,5 @@
 const httpProxy = require('http-proxy')
+const request = require('request');
 const hosts = require("../hosts.js")
 const { ports, outTimeout, inTimeout, arc } = require("../config.js")
 const { readFileSync, writeFileSync } = require("fs")
@@ -35,18 +36,47 @@ module.exports = {
                 <head>
                     <meta charset="UTF-8">
                     <meta httpEquiv='Content-Type' content='text/html; charset=utf-8' />
-                    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+                    <meta name='viewport' content='width=device-width, initial-scale=0.8' />
                     <title>${req.headers.host === `161.129.154.146` ? `You found me (#_<-)` : `503 | ${req.headers.host}`}</title>
                 </head>
-                <body style="display: flex; justify-content: center; text-align: center; margin-top: 2rem;">
-                    <div>
-                        ${req.headers.host === `161.129.154.146` ? `
-                        <div style="font-size: 3rem">Proxy server</div>
-                        <div stlye="font-size: 0.5rem">Get started in <text>/root/luna/proxy/src/hosts.js</text> or contact <a href="https://discord.com/users/821472922140803112">Luna</a></div>
-                        ` : `
-                        <div style="font-size: 3rem">503 - Service Unavailable</div>
-                        <div stlye="font-size: 0.5rem">Get started in <text>/root/luna/proxy/src/hosts.js</text> or contact <a href="https://discord.com/users/821472922140803112">Luna</a></div>
-                        `}
+                <body>
+                    <div style="display: flex; justify-content: center; text-align: center; margin-top: 3rem;">
+                        <div>
+                            ${req.headers.host === `161.129.154.146` ? `
+                            <div style="font-size: 4rem">Proxy server</div>
+                            ` : `
+                            <div style="font-size: 4rem">Service Unavailable</div>
+                            `}
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: center; text-align: center; margin-top: 2rem;">
+                        <main>
+                            <div style="margin: 1rem">
+                                <div style="font-size: 2.2rem; width: 90vw; max-width: 20rem">What happened?</div>
+                                <content stlye="font-size: 1.8rem">
+                                ${req.headers.host === `161.129.154.146` ? `
+                                    You've requested an IP address that is part of the Waya network. <br />
+                                    A valid Host header must be supplied to reach the desired website.
+                                    ` : `
+                                    You've requested a domain name which points to an IP address <br />
+                                    that is part of the Waya network but no associated webserver could be found.
+                                    `}
+                                </content>
+                            </div>
+                            <br />
+                            <div style="margin: 1rem">
+                                <div style="font-size: 2.2rem; width: 90vw; max-width: 20rem;">${req.headers.host === `161.129.154.146` ? `How to setup?` : `How to resolve?`}</div>
+                                <content stlye="font-size: 1.8rem">
+                                    ${req.headers.host === `161.129.154.146` ? `
+                                    Connect via SSH to <text>${req.headers.host}:22</text> and get started in <text>/root/luna/proxy/src/hosts.js</text>. <br />
+                                    ` : `
+                                    Connect to the server and get started in <text>/root/luna/proxy/src/hosts.js</text>. <br />
+                                    `}
+                                    The documentation can be found on GitHub at <a href='https://github.com/Luna-devv/proxy'>github.com/Luna-devv/proxy</a>. <br />
+                                    If you don't know what you're doing at this point, please contact <a href="https://discord.com/users/821472922140803112">Luna</a>.
+                                </content>
+                            </div>
+                        </main>
                     </div>
                 </body>
                 <style>
@@ -62,13 +92,23 @@ module.exports = {
                         color: #9fa2a7;
                         padding: 0.1rem 0.2rem 0.1rem 0.2rem;
                         border-radius: 0.2rem;
+                        user-select: all;
                     }
                     a {
                         all: unset;
                         font-family: 'Open Sans', sans-serif;
                         color: #b671a7;
                         cursor: pointer;
-                        transition-duration: 300ms;
+                        transition-duration: 200ms;
+                    }
+                    a:hover {
+                        color: #d99ecc;
+                    }
+                    main {
+                        text-align: left;
+                    }
+                    content{
+                        color: #aba8b3
                     }
                 </style>
                 </html>
@@ -79,6 +119,11 @@ module.exports = {
         const { type, target } = hosts[req.headers.host]
 
         switch (type) {
+            // Media requests
+            case "MEDIA":
+				request.get(`http://${target}`).pipe(res)
+                break
+			
             // HTTP requests
             case "WEB":
                 proxy.web(req, res, {
