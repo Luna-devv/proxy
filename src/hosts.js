@@ -1,8 +1,18 @@
 module.exports = {
-    "luna.is-a.dev": {
+    "lunish.gay": {
         target: 5000,
         type: "WEB"
     },
+    "www.lunish.gay": {
+        target: 5000,
+        type: "WEB"
+    },
+    "test.lunish.gay": {
+        target: 3000,
+        type: "WEB"
+    },
+
+
     "waya.one": {
         target: 5000,
         type: "WEB"
@@ -11,56 +21,36 @@ module.exports = {
         target: 5000,
         type: "WEB"
     },
-    "console.waya.one": {
-        target: 5001,
-        type: "WEB"
-    },
-    "api.waya.one": {
-        target: 4000,
-        type: "WEB"
-    },
-    "prns-api.waya.one": {
-        target: 4001,
-        type: "WEB"
-    },
-    "api.losti.xyz": {
-        target: 4002,
-        type: "WEB"
-    },
     "ptb.waya.one": {
         target: "https://www.waya.one",
         type: "REDIRECT"
     },
-    "heartbeat-radio.live": {
-        target: 3000,
+
+    "money.waya.one": {
+        target: 5001,
         type: "WEB"
     },
-    "azura.heartbeat-radio.live": {
-        target: 9998,
+    "console-us01.waya.one": {
+        target: 5002,
         type: "WEB"
     },
-    "stream.heartbeat-radio.live": {
-        target: "0.0.0.0:9998/radio/8000/radio.mp3",
-        type: "MEDIA"
-    },
-    "panel.heartbeat-radio.live": {
-        target: 7762,
+
+    "lunish.nl": {
+        target: 5003,
         type: "WEB"
     },
-    "docker-dal1-internal.tayronm.tech": {
-        target: 9443,
+    "www.lunish.nl": {
+        target: 5003,
         type: "WEB"
     },
-    "dj.heartbeat-radio.live": {
-        target: 8005,
+
+
+    "api.waya.one": {
+        target: 4000,
         type: "WEB"
     },
-    "api.heartbeat-radio.live": {
-        target: 25571,
+    "whois.waya.one": {
+        target: 4003,
         type: "WEB"
-    },
-    "heartbeatradio.net": {
-        target: 3000,
-        type: "WEB"
-    },
+    }
 }
