@@ -38,7 +38,9 @@ There are 3 essential types:
 If your site is using [arc.io](https://arc.io/) you can just set this value to `true` to enable support for it. <br />
 Note: All requests to `/arc-sw.js` will be catched by the proxy and will **NOT** reach your webserver.
 
-
+## Modify error pages
+If you want to to change the error pages for either a missing record ([`404.html`](https://github.com/Luna-devv/proxy/blob/main/html/404.html)) or the page for a not responding webserver ([`500.html`](https://github.com/Luna-devv/proxy/blob/main/html/500.html)), go to the [`/html/`](https://github.com/Luna-devv/proxy/tree/main/html) file tree and start editing your plain HTML pages there. <br />
+Note: There is a `{hosts}` placeholder that will be replaced with the requested domain (i.e.: `api.waya.one`)
 
 ## Any questions left?
 Feel free to open a issue, send me an [E-Mail](mailto:luna@waya.one) or [join](https://lunish.nl/support) my Discord server.
