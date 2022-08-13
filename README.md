@@ -12,7 +12,7 @@ This script was originally written from [@flamexdev](https://github.com/flamexde
 
 ## Modify records
 Example key for proxing a webserver:
-```JSON
+```ts
 {
     "api.waya.one": {
         target: 4000,
