@@ -15,7 +15,7 @@ export async function requestManager(req, res) {
 
     // Return error if host isn't congifured
     if (!hosts[req.headers.host]) {
-        res.writeHead(200, {
+        res.writeHead(404, {
             'Content-Type': 'text/html'
         });
         const html_404 = fs.readFileSync(path.join(__dirname, '../html/404.html'), 'utf-8')
@@ -69,7 +69,7 @@ export async function requestManager(req, res) {
 };
 
 export async function onError(err, req, res) {
-    res.writeHead(200, {
+    res.writeHead(500, {
         'Content-Type': 'text/html'
     });
     const html_500 = fs.readFileSync(path.join(__dirname, '../html/500.html'), 'utf-8')
