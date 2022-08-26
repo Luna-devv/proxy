@@ -69,9 +69,11 @@ export async function requestManager(req, res) {
 };
 
 export async function onError(err, req, res) {
-    res.writeHead(500, {
-        'Content-Type': 'text/html'
-    });
-    const html_500 = fs.readFileSync(path.join(__dirname, '../html/500.html'), 'utf-8')
-    return res.end(html_500.replace(/{host}/g, req.headers.host));
+    try {
+        res.writeHead(500, {
+            'Content-Type': 'text/html'
+        });
+        const html_500 = fs.readFileSync(path.join(__dirname, '../html/500.html'), 'utf-8')
+        return res.end(html_500.replace(/{host}/g, req.headers.host));
+    } catch { return }
 }
