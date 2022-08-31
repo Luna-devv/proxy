@@ -1,6 +1,7 @@
 <h1 align="center">P R O X Y</h1>
 
 [![](https://img.shields.io/discord/828676951023550495?color=5865F2&logo=discord&logoColor=white)](https://lunish.nl/support)
+![](https://img.shields.io/github/downloads/Luna-devv/proxy/total)
 
 Basic proxy script written in [node.js](https://nodejs.org) using [node:http](https://nodejs.org/api/http.html) and [node-http-proxy](https://github.com/http-party/node-http-proxy). <br />
 This script was originally written from [@flamexdev](https://github.com/flamexdev/proxy) and was improved and re-written into [TypeScript](https://www.typescriptlang.org/) by me.
