@@ -1,4 +1,5 @@
 <h1 align="center">P R O X Y</h1>
+
 [![](https://img.shields.io/discord/828676951023550495?color=5865F2&logo=discord&logoColor=white)](https://lunish.nl/support)
 
 Basic proxy script written in [node.js](https://nodejs.org) using [node:http](https://nodejs.org/api/http.html) and [node-http-proxy](https://github.com/http-party/node-http-proxy). <br />
