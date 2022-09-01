@@ -75,6 +75,6 @@ typings/
 # FuseBox cache
 .fusebox/
 
-# typescript
-dist
+# npm
 yarn.lock
+package-lock.json
