@@ -15,3 +15,14 @@ type ConfigType = {
     outTimeout: number
     inTimeout: number
 };
+
+export type Host = {
+    target: number | string
+    type: "WEB" | "WS" | "REDIRECT"
+    arc?: true | false
+    overwrites?: {
+        path: string | string[]
+        type: "WEB" | "REDIRECT"
+        target: number | string
+    }[]
+};
