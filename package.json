@@ -8,10 +8,9 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "compile": "npx tsc",
     "start": "node dist/app.js",
     "build": "npx tsc",
-    "deploy": "npx tsc && node dist/app.js"
+    "deploy": "node dist/app.js"
   },
   "dependencies": {
     "@types/node": "^18.6.5",
