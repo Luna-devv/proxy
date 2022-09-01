@@ -1,4 +1,4 @@
-export const Config = {
+export const Config: ConfigType = {
     port: {
         http: 80,
         proxy: 81
@@ -12,6 +12,6 @@ type ConfigType = {
         http: number
         proxy: number
     }
-    onTimeout: number
+    outTimeout: number
     inTimeout: number
-}
+};
