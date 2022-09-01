@@ -20,9 +20,11 @@ export type Host = {
     target: number | string
     type: "WEB" | "WS" | "REDIRECT"
     arc?: true | false
+    ip?: string
     overwrites?: {
         path: string | string[]
         type: "WEB" | "REDIRECT"
         target: number | string
+        ip?: string
     }[]
 };

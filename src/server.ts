@@ -23,7 +23,7 @@ export async function requestManager(req, res) {
     };
 
     // Get details about the registered target
-    const { type, target, arc, overwrites } = hosts[req.headers.host] as Host;
+    const { type, target, arc, ip, overwrites } = hosts[req.headers.host] as Host;
 
     // Enables support for arc.io
     if (arc && req.url === '/arc-sw.js') {
@@ -43,7 +43,7 @@ export async function requestManager(req, res) {
                     // HTTP requests
                     case "WEB":
                         proxy.web(req, res, {
-                            target: `http://127.0.0.1:${overwrite.target}`
+                            target: `http://${overwrite.ip || '127.0.0.1'}:${overwrite.target}`
                         });
                         break;
 
@@ -75,14 +75,14 @@ export async function requestManager(req, res) {
         // HTTP requests
         case "WEB":
             proxy.web(req, res, {
-                target: `http://127.0.0.1:${target}`
+                target: `http://${ip || '127.0.0.1'}:${target}`
             });
             break;
 
         case "WS":
             // WebSocket requests
             proxy.ws(req, res.socket, {
-                target: `ws://127.0.0.1:${target}`
+                target: `ws://${ip || '127.0.0.1'}:${target}`
             });
             break;
 

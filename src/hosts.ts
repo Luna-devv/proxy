@@ -42,6 +42,21 @@ export default {
         target: 5000,
         type: "WEB",
         arc: true
+    },
+
+
+    "proxy.local": {
+        target: 3000,
+        type: "WEB",
+        arc: true,
+        ip: '127.0.9.1',
+        overwrites: [
+            {
+                path: ['/sex', '/sex2'],
+                type: "REDIRECT",
+                target: 'https://google.com'
+            }
+        ]
     }
 
 }
