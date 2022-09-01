@@ -13,6 +13,14 @@ export const proxy = http_proxy.createProxyServer({
 
 export async function requestManager(req, res) {
 
+    // Return success for uptime bots
+    if (req.url === '/__http_proxy_status') {
+        res.writeHead(200, {
+            'Content-Type': 'application/json'
+        });
+        return res.end(JSON.stringify({ success: true }));
+    };
+
     // Return error if host isn't congifured
     if (!hosts[req.headers.host]) {
         res.writeHead(404, {
