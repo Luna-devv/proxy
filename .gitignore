@@ -77,3 +77,4 @@ typings/
 
 # typescript
 dist
+yarn.lock
