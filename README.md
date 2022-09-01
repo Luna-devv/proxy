@@ -78,7 +78,7 @@ Note: All requests to this/these path(s) will be catched by the proxy and will *
 
 ### overwrites.target
 This value can only be a [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String), this key is required inside of [`overwrites`](#overwrites). <br />
-For more reference please go to [#type](#target).
+For more reference please go to [#target](#target).
 
 ### overwrites.type
 This value can only be `WEB` or `REDIRECT`, this key is required inside of [`overwrites`](#overwrites). <br />
