@@ -10,11 +10,13 @@
   "scripts": {
     "compile": "npx tsc",
     "start": "node dist/app.js",
+    "build": "npx tsc",
     "deploy": "npx tsc && node dist/app.js"
   },
   "dependencies": {
     "@types/node": "^18.6.5",
     "typescript": "^4.7.4",
+    "tsc": "^2.0.4",
     "http-proxy": "^1.18.1"
   }
 }
