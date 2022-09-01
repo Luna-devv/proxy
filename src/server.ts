@@ -36,7 +36,7 @@ export async function requestManager(req, res) {
     // managing overwrites
     if (overwrites) {
         for (const overwrite of overwrites) {
-            if (typeof overwrite.path == 'string' ? req.url == overwrite.path : overwrite.path.includes(req.url)) {
+            if ((typeof overwrite.path == 'string' ? req.url == overwrite.path : overwrite.path.includes(req.url)) || overwrite.path === '/*') {
 
                 // Proxy overwrite
                 switch (overwrite.type) {
@@ -49,8 +49,9 @@ export async function requestManager(req, res) {
 
                     case "REDIRECT":
                         // Redirections
+                        if (typeof overwrite.target === 'number') return onError('Redirect target cannot be number', req, res);
                         res.writeHead(302, {
-                            'Location': overwrite.target
+                            'Location': overwrite.target.replace(/{path}/g, req.url.slice(1))
                         });
                         res.end();
                         break;
@@ -88,6 +89,7 @@ export async function requestManager(req, res) {
 
         case "REDIRECT":
             // Redirections
+            if (typeof target === 'number') return onError('Redirect target cannot be number', req, res);
             res.writeHead(302, {
                 'Location': target
             });

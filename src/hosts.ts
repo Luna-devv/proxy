@@ -32,6 +32,17 @@ export default {
         type: "WEB",
         arc: true
     },
+    "c.lunish.nl": {
+        target: 'https://lunish.nl/luna',
+        type: "REDIRECT",
+        overwrites: [
+            {
+                path: '/*',
+                type: "REDIRECT",
+                target: 'https://cdn.waya.one/{path}'
+            }
+        ]
+    },
 
     "waya.one": {
         target: 5000,
@@ -52,9 +63,9 @@ export default {
         ip: '127.0.9.1',
         overwrites: [
             {
-                path: ['/sex', '/sex2'],
+                path: '/*',
                 type: "REDIRECT",
-                target: 'https://google.com'
+                target: 'https://google.com/{path}'
             }
         ]
     }
