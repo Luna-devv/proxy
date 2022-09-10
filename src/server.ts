@@ -44,7 +44,7 @@ export async function requestManager(req, res) {
     // managing overwrites
     if (overwrites) {
         for (const overwrite of overwrites) {
-            if ((typeof overwrite.path == 'string' ? req.url == overwrite.path : overwrite.path.includes(req.url)) || overwrite.path === '/*') {
+            if ((typeof overwrite.path == 'string' ? (req.url.includes('?') ? req.url.split('?')[0] : req.url) == overwrite.path : overwrite.path.includes(req.url)) || overwrite.path === '/*') {
 
                 // Proxy overwrite
                 switch (overwrite.type) {

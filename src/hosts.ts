@@ -63,7 +63,7 @@ export default {
         ip: '127.0.9.1',
         overwrites: [
             {
-                path: '/*',
+                path: ['/sex'],
                 type: "REDIRECT",
                 target: 'https://google.com/{path}'
             }
