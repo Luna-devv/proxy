@@ -2,6 +2,7 @@ import http_proxy from 'http-proxy';
 import fs from 'node:fs';
 import path from 'node:path';
 
+import { Errors } from './errors';
 import { Config, Host } from './config';
 import hosts from './hosts';
 
@@ -55,12 +56,17 @@ export async function requestManager(req, res) {
                 switch (overwrite.type) {
                     // HTTP requests
                     case "WEB":
+                        if (typeof overwrite.target !== 'number') return process.emitWarning(Errors.INVALID_TYPE.replace('![[INVALID_TYPE]]', typeof overwrite.target), 'INVALID_TYPE');
+
                         proxy.web(req, res, {
                             target: `http://${overwrite.ip || '127.0.0.1'}:${overwrite.target}`
                         });
                         break;
 
                     case "REDIRECT":
+                        if (typeof overwrite.target !== 'string') return process.emitWarning(Errors.INVALID_TYPE.replace('![[INVALID_TYPE]]', typeof overwrite.target), 'INVALID_TYPE');
+                        if (overwrite.target.includes('{path}')) process.emitWarning(Errors.PLACEHOLDER_DEPRECATION.replace('![[DEPRICATED_PLACEHOLDER]]', '{path}').replace('![[NEW_PLACHOLDER]]', '{total_path}'), 'DeprecationWarning');
+
                         // Redirections
                         if (typeof overwrite.target === 'number') return onError('Redirect target cannot be number', req, res);
                         res.writeHead(302, {
@@ -68,6 +74,8 @@ export async function requestManager(req, res) {
                                 .replace(/{after_path}/g, (req.url.includes('?') ? req.url.split('?')[0] : req.url).split(overwrite.path.slice(0, -1))[1])
                                 .replace(/{total_path}/g, (req.url.includes('?') ? req.url.split('?')[0] : req.url).slice(1))
                                 .replace(/{query}/g, req.url.split('?')[1] ? `?${req.url.split('?')[1]}` : '')
+
+                                .replace(/{path}/g, (req.url.includes('?') ? req.url.split('?')[0] : req.url).slice(1))
                         });
                         res.end();
                         break;
@@ -91,21 +99,26 @@ export async function requestManager(req, res) {
     switch (type) {
         // HTTP requests
         case "WEB":
+            if (typeof target !== 'number') return process.emitWarning(Errors.INVALID_TYPE.replace('![[INVALID_TYPE]]', typeof target), 'INVALID_TYPE');
+
             proxy.web(req, res, {
                 target: `http://${ip || '127.0.0.1'}:${target}`
             });
             break;
 
+        // WebSocket requests
         case "WS":
-            // WebSocket requests
+            if (typeof target !== 'number') return process.emitWarning(Errors.INVALID_TYPE.replace('![[INVALID_TYPE]]', typeof target), 'INVALID_TYPE');
+
             proxy.ws(req, res.socket, {
                 target: `ws://${ip || '127.0.0.1'}:${target}`
             });
             break;
 
+        // Redirections
         case "REDIRECT":
-            // Redirections
-            if (typeof target === 'number') return onError('Redirect target cannot be number', req, res);
+            if (typeof target !== 'string') return process.emitWarning(Errors.INVALID_TYPE.replace('![[INVALID_TYPE]]', typeof target), 'INVALID_TYPE');
+
             res.writeHead(302, {
                 'Location': target
             });
