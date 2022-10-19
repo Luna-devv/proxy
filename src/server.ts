@@ -44,7 +44,12 @@ export async function requestManager(req, res) {
     // managing overwrites
     if (overwrites) {
         for (const overwrite of overwrites) {
-            if ((typeof overwrite.path == 'string' ? (req.url.includes('?') ? req.url.split('?')[0] : req.url) == overwrite.path : overwrite.path.includes(req.url)) || overwrite.path === '/*') {
+
+            if (
+                (typeof overwrite.path === 'string' ? (req.url.includes('?') ? req.url.split('?')[0] : req.url) == overwrite.path : overwrite.path.includes(req.url.includes('?') ? req.url.split('?')[0] : req.url))
+                || (typeof overwrite.path === 'string' && overwrite.path.endsWith('/*') && (req.url.includes('?') ? req.url.split('?')[0] : req.url).startsWith(overwrite.path.slice(0, -1)))
+                || overwrite.path === '/*'
+            ) {
 
                 // Proxy overwrite
                 switch (overwrite.type) {
@@ -59,7 +64,10 @@ export async function requestManager(req, res) {
                         // Redirections
                         if (typeof overwrite.target === 'number') return onError('Redirect target cannot be number', req, res);
                         res.writeHead(302, {
-                            'Location': overwrite.target.replace(/{path}/g, req.url.slice(1))
+                            'Location': overwrite.target
+                                .replace(/{after_path}/g, (req.url.includes('?') ? req.url.split('?')[0] : req.url).split(overwrite.path.slice(0, -1))[1])
+                                .replace(/{total_path}/g, (req.url.includes('?') ? req.url.split('?')[0] : req.url).slice(1))
+                                .replace(/{query}/g, req.url.split('?')[1] ? `?${req.url.split('?')[1]}` : '')
                         });
                         res.end();
                         break;

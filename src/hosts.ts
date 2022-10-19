@@ -25,7 +25,7 @@ export default {
     "lunish.nl": {
         target: 5001,
         type: "WEB",
-        arc: true
+        arc: true,
     },
     "www.lunish.nl": {
         target: 5001,
@@ -40,7 +40,7 @@ export default {
                 path: '/*',
                 type: "REDIRECT",
                 target: 'https://cdn.waya.one/{path}'
-            }
+            },
         ]
     },
 
@@ -63,9 +63,24 @@ export default {
         ip: '127.0.9.1',
         overwrites: [
             {
-                path: ['/sex'],
+                path: '/_/*',
                 type: "REDIRECT",
-                target: 'https://google.com/{path}'
+                target: 'https://google.com/{total_path}'
+            },
+            {
+                path: '/search/*',
+                type: "REDIRECT",
+                target: 'https://google.com/search?q={after_path}'
+            },
+            {
+                path: '/search-w-query/*',
+                type: "REDIRECT",
+                target: 'https://google.com/search?q={after_path}{query}'
+            },
+            {
+                path: ['/alphabet', '/abc', 'xyz'],
+                type: "REDIRECT",
+                target: 'https://abc.xyz'
             }
         ]
     }
