@@ -26,5 +26,6 @@ export type Host = {
         type: "WEB" | "REDIRECT"
         target: number | string
         ip?: string
+        ignoreIfTrue?: (req) => boolean;
     }[]
 };

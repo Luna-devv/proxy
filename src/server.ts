@@ -43,13 +43,15 @@ export async function requestManager(req, res) {
     };
 
     // managing overwrites
-    if (overwrites) {
+    if (overwrites && req.url !== '/') {
         for (const overwrite of overwrites) {
 
             if (
-                (typeof overwrite.path === 'string' ? (req.url.includes('?') ? req.url.split('?')[0] : req.url) == overwrite.path : overwrite.path.includes(req.url.includes('?') ? req.url.split('?')[0] : req.url))
-                || (typeof overwrite.path === 'string' && overwrite.path.endsWith('/*') && (req.url.includes('?') ? req.url.split('?')[0] : req.url).startsWith(overwrite.path.slice(0, -1)))
-                || overwrite.path === '/*'
+                !(overwrite.ignoreIfTrue?.(req) || false) && (
+                    (typeof overwrite.path === 'string' ? (req.url.includes('?') ? req.url.split('?')[0] : req.url) == overwrite.path : overwrite.path.includes(req.url.includes('?') ? req.url.split('?')[0] : req.url))
+                    || (typeof overwrite.path === 'string' && overwrite.path.endsWith('/*') && (req.url.includes('?') ? req.url.split('?')[0] : req.url).startsWith(overwrite.path.slice(0, -1)))
+                    || overwrite.path === '/*'
+                )
             ) {
 
                 // Proxy overwrite
