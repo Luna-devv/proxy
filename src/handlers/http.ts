@@ -1,5 +1,4 @@
 import node_proxy from 'node:http';
-import path from 'node:path';
 import fs from 'node:fs';
 
 import { proxy, error } from '.';
@@ -8,7 +7,8 @@ import { Host } from '../config';
 import hosts from '../hosts';
 
 export async function handle(req: node_proxy.IncomingMessage, res: node_proxy.ServerResponse) {
-    if (hosts[req.headers.host || ''].type === 'WS') return;
+    console.log('a')
+    if (hosts[req.headers.host || '']?.type === 'WS') return;
 
     // Return error if no host header or url is present
     if (!req.headers.host || !req.url) {
@@ -28,7 +28,7 @@ export async function handle(req: node_proxy.IncomingMessage, res: node_proxy.Se
         res.writeHead(404, {
             'Content-Type': 'text/html'
         });
-        const html_404 = fs.readFileSync(path.join(__dirname, '../html/404.html'), 'utf-8')
+        const html_404 = fs.readFileSync(`${process.cwd()}/html/404.html`, 'utf-8')
         return res.end(html_404.replace(/{host}/g, req.headers.host));
     };
 
