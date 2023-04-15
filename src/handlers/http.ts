@@ -1,18 +1,19 @@
-import http_proxy from 'http-proxy';
-import fs from 'node:fs';
+import node_proxy from 'node:http';
 import path from 'node:path';
+import fs from 'node:fs';
 
-import { Errors } from './errors';
-import { Config, Host } from './config';
-import hosts from './hosts';
+import { proxy, error } from '.';
+import { Errors } from '../constants';
+import { Host } from '../config';
+import hosts from '../hosts';
 
-export const proxy = http_proxy.createProxyServer({
-    proxyTimeout: Config.outTimeout,
-    timeout: Config.inTimeout,
-    ws: true
-}).listen(Config.port.proxy);
+export async function handle(req: node_proxy.IncomingMessage, res: node_proxy.ServerResponse) {
+    if (hosts[req.headers.host || ''].type === 'WS') return;
 
-export async function requestManager(req, res) {
+    // Return error if no host header or url is present
+    if (!req.headers.host || !req.url) {
+        return res.end(JSON.stringify({ success: false, message: "No host" }));
+    }
 
     // Return success for uptime bots
     if (req.url === '/__http_proxy_status') {
@@ -70,10 +71,10 @@ export async function requestManager(req, res) {
                         if (overwrite.target.includes('{path}')) process.emitWarning(Errors.PLACEHOLDER_DEPRECATION.replace('![[DEPRICATED_PLACEHOLDER]]', '{path}').replace('![[NEW_PLACHOLDER]]', '{total_path}'), 'DeprecationWarning');
 
                         // Redirections
-                        if (typeof overwrite.target === 'number') return onError('Redirect target cannot be number', req, res);
+                        if (typeof overwrite.target === 'number') return error.send('Redirect target cannot be number', req, res);
                         res.writeHead(302, {
                             'Location': overwrite.target
-                                .replace(/{after_path}/g, (req.url.includes('?') ? req.url.split('?')[0] : req.url).split(overwrite.path.slice(0, -1))[1])
+                                .replace(/{after_path}/g, (req.url.includes('?') ? req.url.split('?')[0] : req.url).split(overwrite.path.toString().slice(0, -1))[1])
                                 .replace(/{total_path}/g, (req.url.includes('?') ? req.url.split('?')[0] : req.url).slice(1))
                                 .replace(/{query}/g, req.url.split('?')[1] ? `?${req.url.split('?')[1]}` : '')
 
@@ -108,15 +109,6 @@ export async function requestManager(req, res) {
             });
             break;
 
-        // WebSocket requests
-        case "WS":
-            if (typeof target !== 'number') return process.emitWarning(Errors.INVALID_TYPE.replace('![[INVALID_TYPE]]', typeof target), 'INVALID_TYPE');
-
-            proxy.ws(req, res.socket, {
-                target: `ws://${ip || '127.0.0.1'}:${target}`
-            });
-            break;
-
         // Redirections
         case "REDIRECT":
             if (typeof target !== 'string') return process.emitWarning(Errors.INVALID_TYPE.replace('![[INVALID_TYPE]]', typeof target), 'INVALID_TYPE');
@@ -136,15 +128,4 @@ export async function requestManager(req, res) {
             res.end();
             break;
     };
-};
-
-export async function onError(err, req, res) {
-    if (!res) return;
-    try {
-        res.writeHead(500, {
-            'Content-Type': 'text/html'
-        });
-        const html_500 = fs.readFileSync(path.join(__dirname, '../html/500.html'), 'utf-8')
-        return res.end(html_500.replace(/{host}/g, req.headers.host));
-    } catch { return };
 };
