@@ -7,7 +7,6 @@ import { Host } from '../config';
 import hosts from '../hosts';
 
 export async function handle(req: node_proxy.IncomingMessage, res: node_proxy.ServerResponse) {
-    console.log('a')
     if (hosts[req.headers.host || '']?.type === 'WS') return;
 
     // Return error if no host header or url is present
