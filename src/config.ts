@@ -1,3 +1,5 @@
+import node_proxy from 'node:http';
+
 export const Config: ConfigType = {
     port: {
         http: 80,
@@ -17,15 +19,16 @@ type ConfigType = {
 };
 
 export type Host = {
-    target: number | string
-    type: "WEB" | "WS" | "REDIRECT"
-    arc?: true | false
-    ip?: string
+    target: number | string;
+    type: "WEB" | "WS" | "REDIRECT";
+    arc?: boolean;
+    ip?: string;
+
     overwrites?: {
-        path: string | string[]
-        type: "WEB" | "REDIRECT"
-        target: number | string
-        ip?: string
-        ignoreIfTrue?: (req) => boolean;
-    }[]
+        path: string | string[];
+        type: "WEB" | "REDIRECT";
+        target: number | string;
+        ip?: string;
+        ignoreIfTrue?: (req: node_proxy.IncomingMessage) => boolean;
+    }[];
 };
