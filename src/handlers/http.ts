@@ -7,12 +7,6 @@ import { Host } from '../config';
 import hosts from '../hosts';
 
 export async function handle(req: node_proxy.IncomingMessage, res: node_proxy.ServerResponse) {
-    if (hosts[req.headers.host || '']?.type === 'WS') return;
-
-    // Return error if no host header or url is present
-    if (!req.headers.host || !req.url) {
-        return res.end(JSON.stringify({ success: false, message: "No host" }));
-    }
 
     // Return success for uptime bots
     if (req.url === '/__http_proxy_status') {
@@ -21,6 +15,13 @@ export async function handle(req: node_proxy.IncomingMessage, res: node_proxy.Se
         });
         return res.end(JSON.stringify({ success: true }));
     };
+
+    if (hosts[req.headers.host || '']?.type === 'WS') return;
+
+    // Return error if no host header or url is present
+    if (!req.headers.host || !req.url) {
+        return res.end(JSON.stringify({ success: false, message: "No host" }));
+    }
 
     // Return error if host isn't congifured
     if (!hosts[req.headers.host]) {
